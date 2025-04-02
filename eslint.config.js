@@ -1,4 +1,3 @@
-// filepath: /Users/igor/Developer/realist/eslint.config.js
 import eslintPluginPrettier from "eslint-plugin-prettier";
 import typescriptEslintPlugin from "@typescript-eslint/eslint-plugin";
 import typescriptEslintParser from "@typescript-eslint/parser";
