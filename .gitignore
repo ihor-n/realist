@@ -11,8 +11,8 @@ yarn-error.log
 dist/
 *.tsbuildinfo
 
-# PostgreSQL
-*.db
+# SQLite
+database.sqlite
 
 # Logs
 *.log
