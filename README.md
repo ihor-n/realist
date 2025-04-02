@@ -33,6 +33,7 @@ API built with **Express.js**, **TypeScript**, **SQLite**, and **Axios**.
 3. **Configure `.env`**:
 
     ```plaintext
+    PORT=<your port number>
     WK_CLIENT_ID=<your WealthKernel client ID>
     WK_CLIENT_SECRET=<your WealthKernel client secret>
     ```
