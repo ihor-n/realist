@@ -13,7 +13,7 @@ export const errorHandler = (
   err: ApiError,
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   console.error(err.message);
   res.status(err.statusCode || 500).json({ error: err.message });

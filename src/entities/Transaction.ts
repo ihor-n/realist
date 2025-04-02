@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+} from "typeorm";
 import Account from "./Account";
 
 @Entity()
@@ -6,7 +13,7 @@ export default class Transaction {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Account, account => account.id)
+  @ManyToOne(() => Account, (account) => account.id)
   account: Account;
 
   @Column()

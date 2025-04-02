@@ -1,1 +1,1 @@
-export { default as validateAccountCreation } from './accountValidation'
+export { default as validateAccountCreation } from "./accountValidation";

@@ -1,15 +1,15 @@
-import { Request, Response } from 'express';
-import { Account, User } from '../entities';
-import { AppDataSource } from '../data-source';
-import { createWealthKernelAccount, getAccessToken } from '../services';
-import { validationResult } from 'express-validator';
+import { Request, Response } from "express";
+import { Account, User } from "../entities";
+import { AppDataSource } from "../data-source";
+import { createWealthKernelAccount, getAccessToken } from "../services";
+import { validationResult } from "express-validator";
 
 // Utility function to validate the user input
 const validateUserExists = async (userId: number) => {
   const userRepo = AppDataSource.getRepository(User);
   const user = await userRepo.findOne({ where: { id: userId } });
   if (!user) {
-    throw new Error('User not found');
+    throw new Error("User not found");
   }
   return user;
 };
@@ -20,7 +20,7 @@ const fetchAccessToken = async () => {
     const accessToken = await getAccessToken();
     return accessToken;
   } catch (error) {
-    throw new Error('Failed to fetch access token');
+    throw new Error("Failed to fetch access token");
   }
 };
 
@@ -28,7 +28,7 @@ const fetchAccessToken = async () => {
 const saveAccountToDatabase = async (
   user: User,
   accountType: string,
-  wealthkernelAccountId: string
+  wealthkernelAccountId: string,
 ) => {
   const accountRepo = AppDataSource.getRepository(Account);
   const newAccount = new Account();
@@ -42,7 +42,10 @@ const saveAccountToDatabase = async (
 };
 
 // Main controller function to open an account
-export const openAccount = async (req: Request, res: Response): Promise<Response> => {
+export const openAccount = async (
+  req: Request,
+  res: Response,
+): Promise<Response> => {
   // Validate request payload
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -59,16 +62,26 @@ export const openAccount = async (req: Request, res: Response): Promise<Response
     const accessToken = await fetchAccessToken();
 
     // Create the account in WealthKernel API
-    const wkAccountData = await createWealthKernelAccount(user, accountType, accessToken);
+    const wkAccountData = await createWealthKernelAccount(
+      user,
+      accountType,
+      accessToken,
+    );
 
     // Save the new account to the database
-    const newAccount = await saveAccountToDatabase(user, accountType, wkAccountData.id);
+    const newAccount = await saveAccountToDatabase(
+      user,
+      accountType,
+      wkAccountData.id,
+    );
 
     // Return the created account
     return res.status(201).json(newAccount);
   } catch (error) {
-    console.error('Error creating account:', (error as any).message);
-    return res.status(500).json({ error: (error as any).message || 'Internal server error' });
+    console.error("Error creating account:", (error as any).message);
+    return res
+      .status(500)
+      .json({ error: (error as any).message || "Internal server error" });
   }
 };
 

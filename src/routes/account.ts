@@ -1,6 +1,6 @@
-import express from 'express';
-import { validateAccountCreation } from '../validations';
-import { openAccount } from '../controllers';
+import express from "express";
+import { validateAccountCreation } from "../validations";
+import { openAccount } from "../controllers";
 
 const router = express.Router();
 
@@ -100,6 +100,6 @@ const router = express.Router();
  *                   type: string
  *                   example: "Internal server error"
  */
-router.post('/accounts/open', validateAccountCreation, openAccount as any);
+router.post("/accounts/open", validateAccountCreation, openAccount as any);
 
 export default router;

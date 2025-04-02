@@ -1,1 +1,4 @@
-export { default as getAccessToken, createWealthKernelAccount } from './accountService'
+export {
+  default as getAccessToken,
+  createWealthKernelAccount,
+} from "./accountService";

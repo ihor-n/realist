@@ -10,5 +10,5 @@
     "experimentalDecorators": true,
     "strictPropertyInitialization": false
   },
-  "include": ["src/**/*", "jest.config.js"]
+  "include": ["src/**/*"]
 }

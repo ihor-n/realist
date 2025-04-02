@@ -23,7 +23,11 @@ app.use((req, res, next) => {
 app.use(errorHandler);
 
 AppDataSource.initialize()
-  .then(async () => app.listen(ENV.PORT, () => logger.info(`Server running on port ${ENV.PORT}`)))
+  .then(async () =>
+    app.listen(ENV.PORT, () =>
+      logger.info(`Server running on port ${ENV.PORT}`),
+    ),
+  )
   .catch((error) => logger.error(error));
 
 export default app;

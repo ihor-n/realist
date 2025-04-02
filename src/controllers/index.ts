@@ -1,1 +1,1 @@
-export { default as openAccount } from './accountController'
+export { default as openAccount } from "./accountController";
