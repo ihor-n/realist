@@ -1,0 +1,39 @@
+graph TD;
+    %% User Interaction
+    A["User Interface (Web/Mobile App)"] -->|Requests| B["API Gateway (Express)"]
+
+    %% Compliance Check Before Account Creation
+    B -->|Compliance & KYC Checks First| G[Compliance Service]
+    G -->|"If Approved → Proceed"| D[Account Service]
+    G -->|"If Rejected → Stop"| Z["KYC Rejection Handling"]
+    
+    %% API Gateway Handles Other Functionalities
+    B -->|Auth Check| C[Auth Service]
+    B -->|Rate Limiting & Retry Logic| T["Rate Limiter (Redis)"]
+    B -->|Deposits & Withdrawals| E[Transaction Service]
+    B -->|Trade Execution| F[Trading Service]
+    B -->|Logging & Monitoring| L[Logging & Monitoring Service]
+
+    %% OAuth2 Authentication for WealthKernel API
+    C <-->|"Get Access Token (OAuth2)"| I[WealthKernel OAuth2 Server]
+    C -->|"Store Token (TTL in Redis)"| P[(Redis Cache)]
+    P -->|Attach Bearer Token| B
+
+    %% Investment Account Management
+    D -->|Create & Manage Accounts| J[WealthKernel API]
+    D -->|"Store Account Data"| K[(Accounts Database - PostgreSQL)]
+
+    %% Transactions & Payments
+    E -->|Store Transactions| M[(Transactions Database - PostgreSQL)]
+    E -->|Monitor Fraud| X[AI Fraud Detection]
+    X -->|Process Deposits/Withdrawals| J
+    E -.->|Async Processing| S["Message Queue (RabbitMQ/Kafka)"]
+
+    %% Trading & Investments
+    F -->|Trade Fractional Shares| J
+    F -->|Store Trade Orders| N[(Trade Orders Database - PostgreSQL)]
+    F -.->|Async Processing| S
+    S -.->|Async Processing| J
+
+    %% Notifications
+    B -->|User Notifications| U["Notification Service (SendGrid/Twilio)"]
