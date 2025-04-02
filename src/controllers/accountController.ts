@@ -3,6 +3,7 @@ import { Account, User } from "../entities";
 import { AppDataSource } from "../data-source";
 import { createWealthKernelAccount, getAccessToken } from "../services";
 import { validationResult } from "express-validator";
+import logger from "../utils/logger";
 
 // Utility function to validate the user input
 const validateUserExists = async (userId: number) => {
@@ -78,10 +79,11 @@ export const openAccount = async (
     // Return the created account
     return res.status(201).json(newAccount);
   } catch (error) {
-    console.error("Error creating account:", (error as any).message);
+    logger.error(error instanceof Error ? error.message : "Internal server error");
+    
     return res
       .status(500)
-      .json({ error: (error as any).message || "Internal server error" });
+      .json({ error: error instanceof Error ? error.message : "Internal server error" });
   }
 };
 
