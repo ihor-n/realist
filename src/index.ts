@@ -3,6 +3,7 @@ import { setupSwagger } from "./swagger";
 import { accountRouter } from "./routes";
 import { AppDataSource } from "./data-source";
 import { errorHandler } from "./middlewares/errorHandler";
+import { notFoundHandler } from "./middlewares/notFoundHandler";
 import { ENV } from "../config/env";
 import logger from "./utils/logger";
 
@@ -13,13 +14,7 @@ setupSwagger(app);
 
 app.use(accountRouter);
 
-app.use((req, res, next) => {
-  if (req.path.startsWith("/api-docs")) {
-    return next();
-  }
-  res.status(404).json({ error: "Route not found" });
-});
-
+app.use(notFoundHandler);
 app.use(errorHandler);
 
 AppDataSource.initialize()
