@@ -1,11 +1,12 @@
 import axios from 'axios';
 import { User } from '../entities';
+import { ENV } from '../../config/env';
 
 const getAccessToken = async () => {
   const response = await axios.post('https://api.wealthkernel.com/oauth/token', {
     grant_type: 'client_credentials',
-    client_id: process.env.WK_CLIENT_ID,
-    client_secret: process.env.WK_CLIENT_SECRET,
+    client_id: ENV.WK_CLIENT_ID,
+    client_secret: ENV.WK_CLIENT_SECRET,
   });
   return response.data.access_token;
 };
